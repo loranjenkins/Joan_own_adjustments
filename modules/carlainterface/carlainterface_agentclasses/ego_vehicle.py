@@ -143,6 +143,7 @@ class EgoVehicleProcess:
         self.settings = settings
         self.shared_variables = shared_variables
         self.carlainterface_mp = carla_mp
+        self.shared_variables.cruise_control_active = True
 
         self._control = carla.VehicleControl()
         if self.settings.selected_car != 'None':
@@ -179,7 +180,7 @@ class EgoVehicleProcess:
             self._control.reverse = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].reverse
             self._control.hand_brake = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].handbrake
             self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].brake
-            if self.settings.set_velocity:
+            if self.shared_variables.cruise_control_active:
                 vel_error = self.settings.velocity - (math.sqrt(
                     self.spawned_vehicle.get_velocity().x ** 2 + self.spawned_vehicle.get_velocity().y ** 2 + self.spawned_vehicle.get_velocity().z ** 2) * 3.6)
                 vel_error_rate = (math.sqrt(
@@ -210,7 +211,8 @@ class EgoVehicleProcess:
 
     def destroy(self):
         if hasattr(self, 'spawned_vehicle'):
-            self.spawned_vehicle.destroy()
+            if self.spawned_vehicle.is_alive:
+                self.spawned_vehicle.destroy()
 
     def velocity_PD_controller(self, vel_error):
         _kp_vel = 50
@@ -368,7 +370,7 @@ class EgoVehicleSettings:
         self.selected_spawnpoint = 'Spawnpoint 0'
         self.selected_car = 'hapticslab.audi'
         self.velocity = 80
-        self.set_velocity = False
+        self.set_velocity = False  # this is actually cruise control
         self.identifier = identifier
 
         self.agent_type = AgentTypes.EGO_VEHICLE.value

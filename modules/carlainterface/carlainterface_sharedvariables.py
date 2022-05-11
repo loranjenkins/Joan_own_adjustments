@@ -37,6 +37,9 @@ class VehicleSharedVariables(SharedVariables):
         self._data_road_psi = mp.Array(c_float, 50)
         self._data_road_lanewidth = mp.Array(c_float, 50)
 
+        # data for cruise control
+        self._cruise_control_active = mp.Value(c_bool)
+
     @property
     def transform(self):
         return self._transform[:]
@@ -156,3 +159,11 @@ class VehicleSharedVariables(SharedVariables):
     @data_road_lanewidth.setter
     def data_road_lanewidth(self, val):
         self._data_road_lanewidth[:] = val
+
+    @property
+    def cruise_control_active(self):
+        return self._cruise_control_active.value
+
+    @cruise_control_active.setter
+    def cruise_control_active(self, val):
+        self._cruise_control_active.value = val

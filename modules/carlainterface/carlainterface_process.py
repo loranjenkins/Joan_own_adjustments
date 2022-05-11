@@ -72,6 +72,7 @@ class CarlaInterfaceProcess(ModuleProcess):
         self.spawn_points = None
         self.world = None
         self.agent_objects = {}
+        self.news = news
 
     def get_ready(self):
         """
@@ -134,7 +135,3 @@ class CarlaInterfaceProcess(ModuleProcess):
 
         if self._settings_as_object.current_scenario is not None:
             self._settings_as_object.current_scenario.do_function(self)
-
-        if self._module_shared_variables.state == State.STOPPED.value:
-            for agents in self.agent_objects:
-                self.agent_objects[agents].destroy()
