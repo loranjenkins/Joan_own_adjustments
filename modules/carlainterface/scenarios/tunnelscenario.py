@@ -14,6 +14,7 @@ class TunnelScenario(Scenario):
         super().__init__()
 
         self.agent_1_inside_tunnel = True
+        self.agent_2_inside_tunnel = True
 
     def do_function(self, carla_interface_process: CarlaInterfaceProcess):
 
@@ -23,12 +24,21 @@ class TunnelScenario(Scenario):
             except KeyError:
                 pass
 
-            agent = carla_interface_process.agent_objects['Ego Vehicle_1']
-            print('%.2f' % agent.shared_variables.transform[0:3][0])
+            agent_1 = carla_interface_process.agent_objects['Ego Vehicle_1']
+            print('%.2f' % agent_1.shared_variables.transform[0:3][0])
 
-            if agent.shared_variables.transform[0:3][0] > 100.:
+            agent_2 = carla_interface_process.agent_objects['Ego Vehicle_2']
+            print('%.2f' % agent_1.shared_variables.transform[0:3][0])
+
+            if agent_1.shared_variables.transform[0:3][0] > 100.:
                 # turn off auto pilot here
-                agent.shared_variables.cruise_control_active = False
+                agent_1.shared_variables.cruise_control_active = False
+                print('Auto pilot is off')
+                self.inside_tunnel = False
+
+            if agent_2.shared_variables.transform[0:3][0] > 100.:
+                # turn off auto pilot here
+                agent_2.shared_variables.cruise_control_active = False
                 print('Auto pilot is off')
                 self.inside_tunnel = False
 
