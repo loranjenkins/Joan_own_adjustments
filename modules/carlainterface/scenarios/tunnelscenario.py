@@ -42,11 +42,11 @@ class TunnelScenario(Scenario):
                 print('Auto pilot is off')
                 self.inside_tunnel = False
 
-             if agent_1.shared_variables.transform[0:3][0] > 500.:
-                 carla_interface_process.pipe_comm.send({"stop_all_modules": True})
+        if agent_1.shared_variables.transform[0:3][0] > 500.:
+            carla_interface_process.pipe_comm.send({"stop_all_modules": True})
 
-             if agent_2.shared_variables.transform[0:3][0] > 500.:
-                 carla_interface_process.pipe_comm.send({"stop_all_modules": True})
+        if agent_2.shared_variables.transform[0:3][0] > 500.:
+             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
 
 
 
