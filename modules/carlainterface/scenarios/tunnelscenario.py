@@ -13,40 +13,72 @@ class TunnelScenario(Scenario):
     def __init__(self):
         super().__init__()
 
-        self.agent_1_inside_tunnel = True
-        self.agent_2_inside_tunnel = True
+        self.inside_tunnel_agent1 = True
+        self.inside_tunnel_agent2 = True
 
     def do_function(self, carla_interface_process: CarlaInterfaceProcess):
 
-        if self.inside_tunnel:
+        ##cruise control in tunnel agent 1
+        if self.inside_tunnel_agent1:
             try:
                 carla_interface_process.agent_objects['Ego Vehicle_1']
             except KeyError:
                 pass
 
             agent_1 = carla_interface_process.agent_objects['Ego Vehicle_1']
-            print('%.2f' % agent_1.shared_variables.transform[0:3][0])
+            # print('%.2f' % agent_1.shared_variables.transform[0:3][0])
 
-            agent_2 = carla_interface_process.agent_objects['Ego Vehicle_2']
-            print('%.2f' % agent_1.shared_variables.transform[0:3][0])
 
-            if agent_1.shared_variables.transform[0:3][0] > 100.:
+            if agent_1.shared_variables.transform[0:3][0] < -350.: #or 100 or own map
                 # turn off auto pilot here
                 agent_1.shared_variables.cruise_control_active = False
                 print('Auto pilot is off')
-                self.inside_tunnel = False
+                self.inside_tunnel_agent1 = False
 
-            if agent_2.shared_variables.transform[0:3][0] > 100.:
+        ##cruise control in tunnel agent 2
+        if self.inside_tunnel_agent2:
+            try:
+                carla_interface_process.agent_objects['Ego Vehicle_2']
+            except KeyError:
+                pass
+
+            agent_2 = carla_interface_process.agent_objects['Ego Vehicle_2']
+            # print('%.2f' % agent_2.shared_variables.transform[0:3][0])
+
+            if agent_2.shared_variables.transform[0:3][0] < -350.: #or 100 or own map
                 # turn off auto pilot here
                 agent_2.shared_variables.cruise_control_active = False
                 print('Auto pilot is off')
-                self.inside_tunnel = False
+                self.inside_tunnel_agent2 = False
 
-        if agent_1.shared_variables.transform[0:3][0] > 500.:
+        ## Stop a trail agent1
+        agent_1 = carla_interface_process.agent_objects['Ego Vehicle_1']
+        # print('%.2f' % agent_1.shared_variables.transform[0:3][0])
+
+        if agent_1.shared_variables.transform[0:3][0] <= -400.:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
+            print('Trail is over')
 
-        if agent_2.shared_variables.transform[0:3][0] > 500.:
-             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
+        ## Stop a trail agent2
+        agent_2 = carla_interface_process.agent_objects['Ego Vehicle_2']
+        # print('%.2f' % agent_2.shared_variables.transform[0:3][0])
+
+        if agent_2.shared_variables.transform[0:3][0] <= -400.:
+            carla_interface_process.pipe_comm.send({"stop_all_modules": True})
+            print('Trail is over')
+
+
+        #     if agent_2.shared_variables.transform[0:3][0] > 100.:
+        #         # turn off auto pilot here
+        #         agent_2.shared_variables.cruise_control_active = False
+        #         print('Auto pilot is off')
+        #         self.inside_tunnel = False
+        #
+        # if agent_1.shared_variables.transform[0:3][0] > 500.:
+        #     carla_interface_process.pipe_comm.send({"stop_all_modules": True})
+        #
+        # if agent_2.shared_variables.transform[0:3][0] > 500.:
+        #      carla_interface_process.pipe_comm.send({"stop_all_modules": True})
 
 
 
