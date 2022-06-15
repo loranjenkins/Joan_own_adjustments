@@ -126,7 +126,8 @@ class EgoVehicleSettingsDialog(QtWidgets.QDialog):
             # update available controllers according to current settings:
             self.combo_haptic_controllers.clear()
             self.combo_haptic_controllers.addItem('None')
-            HapticControllerManagerSettings = self.module_manager.central_settings.get_settings(JOANModules.HAPTIC_CONTROLLER_MANAGER)
+            HapticControllerManagerSettings = self.module_manager.central_settings.get_settings(
+                JOANModules.HAPTIC_CONTROLLER_MANAGER)
             for haptic_controller in HapticControllerManagerSettings.haptic_controllers.values():
                 self.combo_haptic_controllers.addItem(str(haptic_controller))
             idx = self.combo_haptic_controllers.findText(
@@ -147,7 +148,8 @@ class EgoVehicleProcess:
 
         self._control = carla.VehicleControl()
         if self.settings.selected_car != 'None':
-            self._BP = random.choice(self.carlainterface_mp.vehicle_blueprint_library.filter("vehicle." + self.settings.selected_car))
+            self._BP = random.choice(
+                self.carlainterface_mp.vehicle_blueprint_library.filter("vehicle." + self.settings.selected_car))
         self._control = carla.VehicleControl()
         self.world_map = self.carlainterface_mp.world.get_map()
         torque_curve = []
@@ -159,8 +161,10 @@ class EgoVehicleProcess:
 
         if self.settings.selected_spawnpoint != 'None':
             if self.settings.selected_car != 'None':
-                self.spawned_vehicle = self.carlainterface_mp.world.spawn_actor(self._BP, self.carlainterface_mp.spawn_point_objects[
-                    self.carlainterface_mp.spawn_points.index(self.settings.selected_spawnpoint)])
+                self.spawned_vehicle = self.carlainterface_mp.world.spawn_actor(self._BP,
+                                                                                self.carlainterface_mp.spawn_point_objects[
+                                                                                    self.carlainterface_mp.spawn_points.index(
+                                                                                        self.settings.selected_spawnpoint)])
                 physics = self.spawned_vehicle.get_physics_control()
                 physics.torque_curve = torque_curve
                 physics.max_rpm = 14000
@@ -176,30 +180,38 @@ class EgoVehicleProcess:
 
     def do(self):
         if self.settings.selected_input != 'None' and hasattr(self, 'spawned_vehicle'):
-            self._control.steer = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].steering_angle / math.radians(450)
-            self._control.reverse = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].reverse
-            self._control.hand_brake = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].handbrake
-            self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].brake
+            self._control.steer = self.carlainterface_mp.shared_variables_hardware.inputs[
+                                      self.settings.selected_input].steering_angle / math.radians(450)
+            self._control.reverse = self.carlainterface_mp.shared_variables_hardware.inputs[
+                self.settings.selected_input].reverse
+            self._control.hand_brake = self.carlainterface_mp.shared_variables_hardware.inputs[
+                self.settings.selected_input].handbrake
+            self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[
+                self.settings.selected_input].brake
             if self.shared_variables.cruise_control_active:
-                vel_error = self.settings.velocity - (math.sqrt(
-                    self.spawned_vehicle.get_velocity().x ** 2 + self.spawned_vehicle.get_velocity().y ** 2 + self.spawned_vehicle.get_velocity().z ** 2) * 3.6)
-                vel_error_rate = (math.sqrt(
-                    self.spawned_vehicle.get_acceleration().x ** 2 + self.spawned_vehicle.get_acceleration().y ** 2 + self.spawned_vehicle.get_acceleration().z ** 2) * 3.6)
-                error_velocity = [vel_error, vel_error_rate]
-
-                pd_vel_output = self.velocity_PD_controller(error_velocity)
-                if pd_vel_output < 0:
-                    self._control.brake = -pd_vel_output
-                    self._control.throttle = 0
-                    if pd_vel_output < -1:
-                        self._control.brake = 1
-                elif pd_vel_output > 0:
-                    if self._control.brake == 0:
-                        self._control.throttle = pd_vel_output
-                    else:
-                        self._control.throttle = 0
+                self.spawned_vehicle.enable_constant_velocity(carla.Vector3D(x=self.settings.velocity, y=0, z=0))
             else:
+                self.spawned_vehicle.disable_constant_velocity()
                 self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].throttle
+            #     vel_error = self.settings.velocity - (math.sqrt(
+            #         self.spawned_vehicle.get_velocity().x ** 2 + self.spawned_vehicle.get_velocity().y ** 2 + self.spawned_vehicle.get_velocity().z ** 2) * 3.6)
+            #     vel_error_rate = (math.sqrt(
+            #         self.spawned_vehicle.get_acceleration().x ** 2 + self.spawned_vehicle.get_acceleration().y ** 2 + self.spawned_vehicle.get_acceleration().z ** 2) * 3.6)
+            #     error_velocity = [vel_error, vel_error_rate]
+            #
+            #     pd_vel_output = self.velocity_PD_controller(error_velocity)
+            #     if pd_vel_output < 0:
+            #         self._control.brake = -pd_vel_output
+            #         self._control.throttle = 0
+            #         if pd_vel_output < -1:
+            #             self._control.brake = 1
+            #     elif pd_vel_output > 0:
+            #         if self._control.brake == 0:
+            #             self._control.throttle = pd_vel_output
+            #         else:
+            #             self._control.throttle = 0
+            # else:
+            #     self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].throttle
 
             self.spawned_vehicle.apply_control(self._control)
             try:
@@ -271,14 +283,18 @@ class EgoVehicleProcess:
 
             iter_x = 0
             for roadpoint_x in data_road_x:
-                data_road_x_outer.append(roadpoint_x - math.sin(data_road_psi[iter_x]) * data_road_lanewidth[iter_x] / 2)
-                data_road_x_inner.append(roadpoint_x + math.sin(data_road_psi[iter_x]) * data_road_lanewidth[iter_x] / 2)
+                data_road_x_outer.append(
+                    roadpoint_x - math.sin(data_road_psi[iter_x]) * data_road_lanewidth[iter_x] / 2)
+                data_road_x_inner.append(
+                    roadpoint_x + math.sin(data_road_psi[iter_x]) * data_road_lanewidth[iter_x] / 2)
                 iter_x = iter_x + 1
 
             iter_y = 0
             for roadpoint_y in data_road_y:
-                data_road_y_outer.append(roadpoint_y - math.cos(data_road_psi[iter_y]) * data_road_lanewidth[iter_y] / 2)
-                data_road_y_inner.append(roadpoint_y + math.cos(data_road_psi[iter_y]) * data_road_lanewidth[iter_y] / 2)
+                data_road_y_outer.append(
+                    roadpoint_y - math.cos(data_road_psi[iter_y]) * data_road_lanewidth[iter_y] / 2)
+                data_road_y_inner.append(
+                    roadpoint_y + math.cos(data_road_psi[iter_y]) * data_road_lanewidth[iter_y] / 2)
                 iter_y = iter_y + 1
 
             # set shared road variables:
@@ -315,7 +331,8 @@ class EgoVehicleProcess:
                                                                self.spawned_vehicle.get_angular_velocity().z]
 
             rotation_matrix = self.get_rotation_matrix_from_carla(rotation.roll, rotation.pitch, rotation.yaw)
-            velocities_in_vehicle_frame = np.linalg.inv(rotation_matrix) @ np.array([linear_velocity.x, linear_velocity.y, linear_velocity.z])
+            velocities_in_vehicle_frame = np.linalg.inv(rotation_matrix) @ np.array(
+                [linear_velocity.x, linear_velocity.y, linear_velocity.z])
             self.shared_variables.velocities_in_vehicle_frame = velocities_in_vehicle_frame
 
             self.shared_variables.accelerations = [self.spawned_vehicle.get_acceleration().x,
