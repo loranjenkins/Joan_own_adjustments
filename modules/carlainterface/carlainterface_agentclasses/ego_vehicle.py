@@ -189,7 +189,7 @@ class EgoVehicleProcess:
             self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[
                 self.settings.selected_input].brake
             if self.shared_variables.cruise_control_active:
-                self.spawned_vehicle.enable_constant_velocity(carla.Vector3D(x=self.settings.velocity, y=0, z=0))
+                self.spawned_vehicle.enable_constant_velocity(carla.Vector3D(x=self.settings.velocity/3.6, y=0, z=0))
             else:
                 self.spawned_vehicle.disable_constant_velocity()
                 self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].throttle

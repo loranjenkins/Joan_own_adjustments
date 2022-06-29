@@ -17,6 +17,9 @@ class TunnelScenario(Scenario):
         self.inside_tunnel_agent2 = True
 
     def do_function(self, carla_interface_process: CarlaInterfaceProcess):
+        agent_1 = carla_interface_process.agent_objects['Ego Vehicle_1']
+        print('%.2f' % agent_1.shared_variables.transform[0:3][0])
+        print('%.2f' % agent_1.shared_variables.transform[0:3][1])
 
         ##cruise control in tunnel agent 1
         if self.inside_tunnel_agent1:
@@ -26,14 +29,15 @@ class TunnelScenario(Scenario):
                 pass
 
             agent_1 = carla_interface_process.agent_objects['Ego Vehicle_1']
-            print('%.2f' % agent_1.shared_variables.transform[0:3][0])
+            # print('%.2f' % agent_1.shared_variables.transform[0:3][0])
 
 
-            if agent_1.shared_variables.transform[0:3][0] < -350.: #or 100 or own map
-                # turn off auto pilot here
-                agent_1.shared_variables.cruise_control_active = False
-                print('Auto pilot is off')
-                self.inside_tunnel_agent1 = False
+            #
+            # if agent_1.shared_variables.transform[0:3][0] < 22: #or 100 or own map
+            #     # turn off auto pilot here
+            #     agent_1.shared_variables.cruise_control_active = False
+            #     print('Auto pilot is off')
+            #     self.inside_tunnel_agent1 = False
 
         ## check if agenta collide
         # ego_agent_key = 'Ego Vehicle_1'
