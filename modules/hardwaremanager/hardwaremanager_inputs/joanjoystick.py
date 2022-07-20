@@ -32,8 +32,6 @@ class JOANJoystickProcess:
         and to false if it fails
         """
         try:
-            print(self.settings.device_path)
-            print(type(self.settings.device_path))
             self._joystick.open_path(self.settings.device_path)
             self._joystick_open = True
         except OSError:
@@ -116,13 +114,17 @@ class JoyStickSettings:
         self.reverse_value = 8
 
     def as_dict(self):
-        return self.__dict__
+        return_dict = self.__dict__.copy()
+        return_dict['device_path'] = str(return_dict['device_path'], 'UTF-8')
+        return return_dict
 
     def __str__(self):
         return str(self.identifier)
 
     def set_from_loaded_dict(self, loaded_dict):
         for key, value in loaded_dict.items():
+            if key == 'device_path':
+                value = bytes(value, 'UTF-8')
             self.__setattr__(key, value)
 
     @staticmethod
