@@ -32,7 +32,9 @@ class JOANJoystickProcess:
         and to false if it fails
         """
         try:
-            self._joystick.open(self.settings.device_vendor_id, self.settings.device_product_id)
+            print(self.settings.device_path)
+            print(type(self.settings.device_path))
+            self._joystick.open_path(self.settings.device_path)
             self._joystick_open = True
         except OSError:
             print('Connection to USB Joystick failed')
@@ -97,8 +99,7 @@ class JoyStickSettings:
     def __init__(self, identifier=''):
         self.min_steer = -0.5 * math.pi
         self.max_steer = 0.5 * math.pi
-        self.device_vendor_id = 0
-        self.device_product_id = 0
+        self.device_path = b''
         self.identifier = identifier
         self.input_type = HardwareInputTypes.JOYSTICK.value
 
@@ -180,7 +181,7 @@ class JoystickSettingsDialog(QtWidgets.QDialog):
 
         self._joystick = hid.device()
         self.update_timer = QtCore.QTimer()
-        self.update_timer.setInterval(100)
+        self.update_timer.setInterval(1000)
         self.update_timer.timeout.connect(self.preview_joystick_values)
 
         self.useSeparateBrakeChannelCheckBox.stateChanged.connect(self._update_brake_channel_enabled)
@@ -239,11 +240,9 @@ class JoystickSettingsDialog(QtWidgets.QDialog):
 
         selected_device = self.combo_available_devices.currentData()
         if selected_device:
-            self.joystick_settings.device_vendor_id = selected_device['vendor_id']
-            self.joystick_settings.device_product_id = selected_device['product_id']
+            self.joystick_settings.device_path = selected_device['path']
         else:
-            self.joystick_settings.device_vendor_id = 0
-            self.joystick_settings.device_product_id = 0
+            self.joystick_settings.device_path = b''
 
         self.joystick_settings.degrees_of_freedom = self.dofSpinBox.value()
         self.joystick_settings.gas_channel = self.gasChannelSpinBox.value()
@@ -292,8 +291,8 @@ class JoystickSettingsDialog(QtWidgets.QDialog):
 
             for index in range(self.combo_available_devices.count()):
                 current_device = self.combo_available_devices.itemData(index)
-                if current_device and settings_to_display.device_vendor_id == current_device['vendor_id'] and \
-                        settings_to_display.device_product_id == current_device['product_id']:
+                # if current_device and settings_to_display.device_serial_number == current_device['vendor_id'] and \
+                if current_device and settings_to_display.device_path == current_device['path']:
                     self.combo_available_devices.setCurrentIndex(index)
                     break
                 else:
@@ -354,7 +353,7 @@ class JoystickSettingsDialog(QtWidgets.QDialog):
         """
         if value:
             selected_device = self.combo_available_devices.currentData()
-            self._joystick.open(selected_device['vendor_id'], selected_device['product_id'])
+            self._joystick.open_path(selected_device['path'])
             self.update_timer.start()
         else:
             self.update_timer.stop()
