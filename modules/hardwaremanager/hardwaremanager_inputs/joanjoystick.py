@@ -78,14 +78,14 @@ class JOANJoystickProcess:
 
             if self.settings.use_double_steering_resolution:
                 self.steer = (((joystick_data[self.settings.first_steer_channel]) + (
-                    joystick_data[self.settings.second_steer_channel]) * 256) / (256 * 256)) * (
+                    joystick_data[self.settings.second_steer_channel]) * 256) / (16383)) * (
                                      self.settings.max_steer - self.settings.min_steer) - self.settings.max_steer
             else:
                 self.steer = ((joystick_data[self.settings.first_steer_channel]) / 255) * (
                         self.settings.max_steer - self.settings.min_steer) - self.settings.max_steer
 
-        self.shared_variables.brake = self.brake
-        self.shared_variables.throttle = self.throttle
+        self.shared_variables.brake = 1.0 - self.brake
+        self.shared_variables.throttle = 1 - self.throttle
         self.shared_variables.steering_angle = self.steer
         self.shared_variables.handbrake = self.handbrake
         self.shared_variables.reverse = self.reverse
