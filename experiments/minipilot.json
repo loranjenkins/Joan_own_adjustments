@@ -194,10 +194,10 @@
                 "agents": {
                     "Ego Vehicle_1": {
                         "selected_spawnpoint": "Spawnpoint 2",
-                        "velocity": 45 },
+                        "velocity": 55 },
                     "Ego Vehicle_2": {
                         "selected_spawnpoint": "Spawnpoint 3",
-                        "velocity": 55 }
+                        "velocity": 45 }
                 }
             }
         },
@@ -212,10 +212,10 @@
             "Carla Interface": {
                 "agents": {
                     "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 0",
+                        "selected_spawnpoint": "Spawnpoint 1",
                         "velocity": 55 },
                     "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 1",
+                        "selected_spawnpoint": "Spawnpoint 0",
                         "velocity": 45 }
                 }
             }
@@ -250,10 +250,10 @@
             "Carla Interface": {
                 "agents": {
                     "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 2",
+                        "selected_spawnpoint": "Spawnpoint 3",
                         "velocity": 45 },
                     "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 3",
+                        "selected_spawnpoint": "Spawnpoint 2",
                         "velocity": 55 }
                 }
             }

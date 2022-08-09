@@ -186,13 +186,22 @@ class EgoVehicleProcess:
                 self.settings.selected_input].reverse
             self._control.hand_brake = self.carlainterface_mp.shared_variables_hardware.inputs[
                 self.settings.selected_input].handbrake
-            self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[
-                self.settings.selected_input].brake
+            # self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[
+            #     self.settings.selected_input].brake
+            # self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[
+            #     self.settings.selected_input].throttle
             if self.shared_variables.cruise_control_active:
                 self.spawned_vehicle.enable_constant_velocity(carla.Vector3D(x=self.settings.velocity/3.6, y=0, z=0))
+
             else:
                 self.spawned_vehicle.disable_constant_velocity()
-                self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[self.settings.selected_input].throttle
+                self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[
+                    self.settings.selected_input].brake
+                self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[
+                    self.settings.selected_input].throttle
+
+
+
             #     vel_error = self.settings.velocity - (math.sqrt(
             #         self.spawned_vehicle.get_velocity().x ** 2 + self.spawned_vehicle.get_velocity().y ** 2 + self.spawned_vehicle.get_velocity().z ** 2) * 3.6)
             #     vel_error_rate = (math.sqrt(
