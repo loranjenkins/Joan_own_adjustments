@@ -200,6 +200,13 @@ class EgoVehicleProcess:
                 self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[
                     self.settings.selected_input].throttle
 
+            if not self.shared_variables.cruise_control_active and self.settings.velocity/3.6 >= 16.67:
+                self._control.throttle = 60/3.6
+            else:
+                self._control.brake = self.carlainterface_mp.shared_variables_hardware.inputs[
+                    self.settings.selected_input].brake
+                self._control.throttle = self.carlainterface_mp.shared_variables_hardware.inputs[
+                    self.settings.selected_input].throttle
 
 
             #     vel_error = self.settings.velocity - (math.sqrt(
