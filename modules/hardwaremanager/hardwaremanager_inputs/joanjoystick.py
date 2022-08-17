@@ -55,7 +55,7 @@ class JOANJoystickProcess:
 
         if joystick_data:
             if self.settings.use_separate_brake_channel:
-                self.throttle = ((joystick_data[self.settings.gas_channel]) / 255)
+                self.throttle = ((joystick_data[self.settings.gas_channel]) / 255) ##CHANGED!
                 self.brake = - ((joystick_data[self.settings.brake_channel]) / 255)
             else:
                 input_value = 1 - ((joystick_data[self.settings.gas_channel]) / 128)

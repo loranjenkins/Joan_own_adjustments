@@ -1,0 +1,155 @@
+{
+    "modules_included": [
+        "Hardware Manager",
+        "Carla Interface"
+    ],
+    "base_settings": {
+        "Hardware Manager": {
+            "inputs": {
+                "Joystick_1": {
+                    "min_steer": -0.3,
+                    "max_steer": 0.3,
+                    "device_path": "\\\\?\\HID#VID_046D&PID_C29A#6&2662b486&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}",
+                    "identifier": "Joystick_1",
+                    "input_type": 1,
+                    "degrees_of_freedom": 12,
+                    "gas_channel": 6,
+                    "use_separate_brake_channel": true,
+                    "brake_channel": 7,
+                    "first_steer_channel": 4,
+                    "use_double_steering_resolution": true,
+                    "second_steer_channel": 5,
+                    "hand_brake_channel": 0,
+                    "hand_brake_value": 64,
+                    "reverse_channel": 1,
+                    "reverse_value": 1
+                },
+                "Joystick_2": {
+                    "min_steer": -0.3,
+                    "max_steer": 0.3,
+                    "device_path": "\\\\?\\HID#VID_046D&PID_C29A#6&13a903e1&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030}",
+                    "identifier": "Joystick_2",
+                    "input_type": 1,
+                    "degrees_of_freedom": 12,
+                    "gas_channel": 6,
+                    "use_separate_brake_channel": true,
+                    "brake_channel": 7,
+                    "first_steer_channel": 4,
+                    "use_double_steering_resolution": true,
+                    "second_steer_channel": 5,
+                    "hand_brake_channel": 0,
+                    "hand_brake_value": 64,
+                    "reverse_channel": 1,
+                    "reverse_value": 1
+                }
+            }
+        },
+        "Carla Interface": {
+            "agents": {
+                "Ego Vehicle_1": {
+                    "selected_input": "Joystick_1",
+                    "selected_controller": "None",
+                    "selected_spawnpoint": "Spawnpoint 0",
+                    "selected_car": "hapticslab.epicaudi",
+                    "velocity": 40,
+                    "set_velocity": false,
+                    "identifier": "Ego Vehicle_1",
+                    "agent_type": 0
+                },
+                "Ego Vehicle_2": {
+                    "selected_input": "Joystick_2",
+                    "selected_controller": "None",
+                    "selected_spawnpoint": "Spawnpoint 1",
+                    "selected_car": "hapticslab.epicaudi2",
+                    "velocity": 40,
+                    "set_velocity": false,
+                    "identifier": "Ego Vehicle_2",
+                    "agent_type": 0
+                }
+            },
+            "host": "localhost",
+            "port": 2000,
+            "current_scenario": "Tunnel scenario"
+        }
+    },
+    "conditions": {
+        "equal40-40": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {},
+                    "Ego Vehicle_2": {}
+                }
+            }
+        },
+
+        "equal40-40-flipped-side": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 1",
+                        "velocity": 40 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 0",
+                        "velocity": 40 }
+                }
+            }
+        },
+
+        "46-34": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 2",
+                        "velocity": 46 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 3",
+                        "velocity": 34 }
+                }
+            }
+        },
+
+        "43-37": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 2",
+                        "velocity": 43 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 4",
+                        "velocity": 37 }
+                }
+            }
+        }
+    },
+
+    "active_condition_sequence": [
+        "equal40-40",
+        "equal40-40-flipped-side",
+        "46-34",
+        "43-37"
+    ]
+}
