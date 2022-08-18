@@ -1,7 +1,13 @@
-from core.hq.hq_manager import HQManager
+
 from .scenario import Scenario
 from modules.carlainterface.carlainterface_process import CarlaInterfaceProcess
-from tools.carlaimporter import carla
+
+
+import numpy as np
+import shapely.affinity
+import shapely.geometry
+import shapely.ops
+
 
 class TunnelScenario(Scenario):
     """
@@ -17,6 +23,10 @@ class TunnelScenario(Scenario):
         self.inside_tunnel_agent1 = True
         self.inside_tunnel_agent2 = True
         self.stop_signal_was_sent = False
+        self.approach_angle_vehicle1 = 20
+        self.approach_angle_vehicle2 = 110
+        self.vehicle_width = (2 / 2) * 1.3 #+10% overlap
+        self.vehicle_length = (4.7 / 2) * 1.3 #+10% overlap
 
     def do_function(self, carla_interface_process: CarlaInterfaceProcess):
 
@@ -93,17 +103,25 @@ class TunnelScenario(Scenario):
             self.stop_signal_was_sent = True
 
 
+        #Check for collisons
+        vehicle_geometry = shapely.geometry.box(-self.vehicle_width, -self.vehicle_length, self.vehicle_width, self.vehicle_length)
 
-        # collision_x = carla_interface_process.agent_objects['Ego Vehicle_1'].shared_variables.transform[0:3][0] - carla_interface_process.agent_objects['Ego Vehicle_2'].shared_variables.transform[0:3][0]
-        # collision_y = carla_interface_process.agent_objects['Ego Vehicle_1'].shared_variables.transform[0:3][1] - carla_interface_process.agent_objects['Ego Vehicle_2'].shared_variables.transform[0:3][1]
-        # # print(collision_x)
-        # # print(collision_y)
-        #
-        # if collision_x < 2 and collision_y < 4.95 and not self.stop_signal_was_sent:
-        #     carla_interface_process.pipe_comm.send({"stop_all_modules": True})
-        #     print('Collision Occured')
-        #     self.stop_signal_was_sent = True
+        if agent_1.shared_variables.transform[0:3][1] <= 300:
+            vehicle_1 = shapely.affinity.rotate(vehicle_geometry, self.approach_angle_vehicle1, use_radians=True)
+        if agent_2.shared_variables.transform[0:3][1] <= 300:
+            vehicle_2 = shapely.affinity.rotate(vehicle_geometry, self.approach_angle_vehicle2, use_radians=True)
 
+        vehicle_1 = shapely.affinity.translate(vehicle_1, agent_1.shared_variables.transform[0:3][0], agent_1.shared_variables.transform[0:3][1])
+        vehicle_2 = shapely.affinity.translate(vehicle_2, agent_2.shared_variables.transform[0:3][0], agent_2.shared_variables.transform[0:3][1])
+
+        check_for_intersection = vehicle_1.intersection(vehicle_2)
+
+        if check_for_intersection.is_empty:
+            return None
+        if not check_for_intersection.is_empty and not self.stop_signal_was_sent:
+            carla_interface_process.pipe_comm.send({"stop_all_modules": True})
+            print('Collision occured')
+            self.stop_signal_was_sent = True
 
     @property
     def name(self):
