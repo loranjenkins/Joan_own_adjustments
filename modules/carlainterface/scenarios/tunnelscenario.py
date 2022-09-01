@@ -23,16 +23,15 @@ class TunnelScenario(Scenario):
         self.inside_tunnel_agent1 = True
         self.inside_tunnel_agent2 = True
         self.stop_signal_was_sent = False
-        self.approach_angle_vehicle1 = 20
-        self.approach_angle_vehicle2 = 110
-        self.vehicle_width = (2 / 2) * 1.3 #+10% overlap
-        self.vehicle_length = (4.7 / 2) * 1.3 #+10% overlap
+        self.approach_angle_vehicle1 = 135 #this is mirrored in unreal
+        self.approach_angle_vehicle2 = 45
+        self.vehicle_width = (2 / 2) * 1.3 #+30% overlap
+        self.vehicle_length = (4.7 / 2) * 1.3 #+30% overlap
 
     def do_function(self, carla_interface_process: CarlaInterfaceProcess):
 
         agent_1 = carla_interface_process.agent_objects['Ego Vehicle_1']
         agent_2 = carla_interface_process.agent_objects['Ego Vehicle_2']
-
 
         ##cruise control in tunnel agent 1
         if self.inside_tunnel_agent1:
@@ -44,13 +43,13 @@ class TunnelScenario(Scenario):
             agent_1 = carla_interface_process.agent_objects['Ego Vehicle_1']
             # print('%.2f' % agent_1.shared_variables.transform[0:3][1])
 
-            if agent_1.shared_variables.transform[0:3][1] > 97: #or 100 or own map
+            if agent_1.shared_variables.transform[0:3][1] > 89: #or 100 or own map
                 # turn off auto pilot here
                 agent_1.shared_variables.cruise_control_active = False
                 print('Auto pilot is off')
                 self.inside_tunnel_agent1 = False
 
-            if agent_1.shared_variables.transform[0:3][1] < -97: #or 100 or own map
+            if agent_1.shared_variables.transform[0:3][1] < -89: #or 100 or own map
                 # turn off auto pilot here
                 agent_1.shared_variables.cruise_control_active = False
                 print('Auto pilot is off')
@@ -58,12 +57,12 @@ class TunnelScenario(Scenario):
 
 
         #terminate process agent 1
-        if agent_1.shared_variables.transform[0:3][1] > 450. and not self.stop_signal_was_sent:
+        if agent_1.shared_variables.transform[0:3][1] > 400. and not self.stop_signal_was_sent:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
             print('Trail is over')
             self.stop_signal_was_sent = True
 
-        if agent_1.shared_variables.transform[0:3][1] < -450. and not self.stop_signal_was_sent:
+        if agent_1.shared_variables.transform[0:3][1] < -400. and not self.stop_signal_was_sent:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
             print('Trail is over')
             self.stop_signal_was_sent = True
@@ -79,25 +78,25 @@ class TunnelScenario(Scenario):
             agent_2 = carla_interface_process.agent_objects['Ego Vehicle_2']
             # print('%.2f' % agent_2.shared_variables.transform[0:3][0])
 
-            if agent_2.shared_variables.transform[0:3][1] > 97.: #or 100 or own map
+            if agent_2.shared_variables.transform[0:3][1] > 89.: #or 100 or own map
                 # turn off auto pilot here
                 agent_2.shared_variables.cruise_control_active = False
                 print('Auto pilot is off')
                 self.inside_tunnel_agent2 = False
 
-            if agent_2.shared_variables.transform[0:3][1] < -97.: #or 100 or own map
+            if agent_2.shared_variables.transform[0:3][1] < -89.: #or 100 or own map
                 # turn off auto pilot here
                 agent_2.shared_variables.cruise_control_active = False
                 print('Auto pilot is off')
                 self.inside_tunnel_agent2 = False
 
         # terminate process agent 2
-        if agent_2.shared_variables.transform[0:3][1] > 450. and not self.stop_signal_was_sent:
+        if agent_2.shared_variables.transform[0:3][1] > 400. and not self.stop_signal_was_sent:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
             print('Trail is over')
             self.stop_signal_was_sent = True
 
-        if agent_2.shared_variables.transform[0:3][1] < -450. and not self.stop_signal_was_sent:
+        if agent_2.shared_variables.transform[0:3][1] < -400. and not self.stop_signal_was_sent:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
             print('Trail is over')
             self.stop_signal_was_sent = True
@@ -107,9 +106,9 @@ class TunnelScenario(Scenario):
         vehicle_1 = shapely.geometry.box(-self.vehicle_width, -self.vehicle_length, self.vehicle_width, self.vehicle_length)
         vehicle_2 = shapely.geometry.box(-self.vehicle_width, -self.vehicle_length, self.vehicle_width, self.vehicle_length)
 
-        if agent_1.shared_variables.transform[0:3][1] <= 300:
+        if agent_1.shared_variables.transform[0:3][1] <= 250:
             vehicle_1 = shapely.affinity.rotate(vehicle_1, self.approach_angle_vehicle1, use_radians=True)
-        if agent_2.shared_variables.transform[0:3][1] <= 300:
+        if agent_2.shared_variables.transform[0:3][1] <= 250:
             vehicle_2 = shapely.affinity.rotate(vehicle_2, self.approach_angle_vehicle2, use_radians=True)
 
         vehicle_1 = shapely.affinity.translate(vehicle_1, agent_1.shared_variables.transform[0:3][0], agent_1.shared_variables.transform[0:3][1])

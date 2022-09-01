@@ -49,9 +49,9 @@
                 "Ego Vehicle_1": {
                     "selected_input": "Joystick_1",
                     "selected_controller": "None",
-                    "selected_spawnpoint": "Spawnpoint 6",
+                    "selected_spawnpoint": "Spawnpoint 3",
                     "selected_car": "hapticslab.epicaudi",
-                    "velocity": 50,
+                    "velocity": 40,
                     "set_velocity": false,
                     "identifier": "Ego Vehicle_1",
                     "agent_type": 0
@@ -59,9 +59,9 @@
                 "Ego Vehicle_2": {
                     "selected_input": "Joystick_2",
                     "selected_controller": "None",
-                    "selected_spawnpoint": "Spawnpoint 7",
+                    "selected_spawnpoint": "Spawnpoint 4",
                     "selected_car": "hapticslab.epicaudi2",
-                    "velocity": 50,
+                    "velocity": 40,
                     "set_velocity": false,
                     "identifier": "Ego Vehicle_2",
                     "agent_type": 0
@@ -73,7 +73,7 @@
         }
     },
     "conditions": {
-        "equal50-50": {
+        "equal40-40": {
             "Hardware Manager": {
                 "inputs": {
                     "Joystick_1": {},
@@ -88,7 +88,140 @@
             }
         },
 
-        "equal50-50-flipped-side": {
+        "equal40-40-flipped-side": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 4",
+                        "velocity": 40 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 3",
+                        "velocity": 40 }
+                }
+            }
+        },
+
+        "46-34": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 0",
+                        "velocity": 46 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 1",
+                        "velocity": 34 }
+                }
+            }
+        },
+
+        "46-34-flipped-side": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 6",
+                        "velocity": 46 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 5",
+                        "velocity": 34 }
+                }
+            }
+        },
+
+        "43-37": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 0",
+                        "velocity": 43 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 2",
+                        "velocity": 37 }
+                }
+            }
+        },
+
+        "43-37-flipped-side": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 6",
+                        "velocity": 43 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 7",
+                        "velocity": 37 }
+                }
+            }
+        },
+
+        "34-46": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 5",
+                        "velocity": 34 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 6",
+                        "velocity": 46 }
+                }
+            }
+        },
+
+        "34-46-flipped-side": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 1",
+                        "velocity": 34 },
+                    "Ego Vehicle_2": {
+                        "selected_spawnpoint": "Spawnpoint 0",
+                        "velocity": 46 }
+                }
+            }
+        },
+
+        "37-43": {
             "Hardware Manager": {
                 "inputs": {
                     "Joystick_1": {},
@@ -99,53 +232,15 @@
                 "agents": {
                     "Ego Vehicle_1": {
                         "selected_spawnpoint": "Spawnpoint 7",
-                        "velocity": 50 },
+                        "velocity": 37 },
                     "Ego Vehicle_2": {
                         "selected_spawnpoint": "Spawnpoint 6",
-                        "velocity": 50 }
+                        "velocity": 43 }
                 }
             }
         },
 
-        "40-60": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 4",
-                        "velocity": 40 },
-                    "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 1",
-                        "velocity": 60 }
-                }
-            }
-        },
-
-        "40-60-flipped-side": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 5",
-                        "velocity": 40 },
-                    "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 2",
-                        "velocity": 60 }
-                }
-            }
-        },
-
-        "60-40": {
+        "37-43-flipped-side": {
             "Hardware Manager": {
                 "inputs": {
                     "Joystick_1": {},
@@ -156,91 +251,15 @@
                 "agents": {
                     "Ego Vehicle_1": {
                         "selected_spawnpoint": "Spawnpoint 2",
-                        "velocity": 60 },
-                    "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 5",
-                        "velocity": 40 }
-                }
-            }
-        },
-
-        "60-40-flipped-side": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 1",
-                        "velocity": 60 },
-                    "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 4",
-                        "velocity": 40 }
-                }
-            }
-        },
-
-        "55-45": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 2",
-                        "velocity": 55 },
-                    "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 3",
-                        "velocity": 45 }
-                }
-            }
-        },
-
-        "55-45-flipped-side": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 1",
-                        "velocity": 55 },
+                        "velocity": 37 },
                     "Ego Vehicle_2": {
                         "selected_spawnpoint": "Spawnpoint 0",
-                        "velocity": 45 }
+                        "velocity": 43 }
                 }
             }
         },
 
-        "45-55": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 0",
-                        "velocity": 45 },
-                    "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 1",
-                        "velocity": 55 }
-                }
-            }
-        },
-
-        "45-55-flipped-side": {
+        "random-equal-40": {
             "Hardware Manager": {
                 "inputs": {
                     "Joystick_1": {},
@@ -251,68 +270,46 @@
                 "agents": {
                     "Ego Vehicle_1": {
                         "selected_spawnpoint": "Spawnpoint 3",
-                        "velocity": 45 },
+                        "velocity": 40 },
                     "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 2",
-                        "velocity": 55 }
-                }
-            }
-        },
-
-        "random-equal-60": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
-                        "selected_spawnpoint": "Spawnpoint 6",
-                        "velocity": 60 },
-                    "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 8",
-                        "velocity": 60 }
-                }
-            }
-        },
-
-        "random-equal-60-flipped-side": {
-            "Hardware Manager": {
-                "inputs": {
-                    "Joystick_1": {},
-                    "Joystick_2": {}
-                }
-            },
-            "Carla Interface": {
-                "agents": {
-                    "Ego Vehicle_1": {
                         "selected_spawnpoint": "Spawnpoint 9",
-                        "velocity": 60 },
+                        "velocity": 40 }
+                }
+            }
+        },
+
+        "random-equal-40-flipped-side": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {
+                        "selected_spawnpoint": "Spawnpoint 8",
+                        "velocity": 40 },
                     "Ego Vehicle_2": {
-                        "selected_spawnpoint": "Spawnpoint 7",
-                        "velocity": 60 }
+                        "selected_spawnpoint": "Spawnpoint 4",
+                        "velocity": 40 }
                 }
             }
         }
     },
 
     "active_condition_sequence": [
-        "equal50-50",
-        "60-40",
-        "45-55-flipped-side",
-        "40-60",
-        "55-45-flipped-side",
-        "random-equal-60-flipped-side",
-        "equal50-50-flipped-side",
-        "40-60-flipped-side",
-        "55-45",
-        "equal50-50",
-        "random-equal-60",
-        "45-55",
-        "60-40-flipped-side",
-        "equal50-50-flipped-side"
-
+        "equal40-40",
+        "equal40-40-flipped-side",
+        "random-equal-40",
+        "random-equal-40-flipped-side",
+        "46-34",
+        "46-34-flipped-side",
+        "43-37",
+        "43-37-flipped-side",
+        "34-46",
+        "34-46-flipped-side",
+        "37-43",
+        "37-43-flipped-side"
     ]
 }
