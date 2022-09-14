@@ -88,6 +88,21 @@
             }
         },
 
+        "trailexploring": {
+            "Hardware Manager": {
+                "inputs": {
+                    "Joystick_1": {},
+                    "Joystick_2": {}
+                }
+            },
+            "Carla Interface": {
+                "agents": {
+                    "Ego Vehicle_1": {},
+                    "Ego Vehicle_2": {}
+                }
+            }
+        },
+
         "equal40-40-flipped-side": {
             "Hardware Manager": {
                 "inputs": {
@@ -299,17 +314,20 @@
     },
 
     "active_condition_sequence": [
-        "equal40-40",
+        "trailexploring",
+        "trailexploring",
+        "trailexploring",
+        "46-34",
         "equal40-40-flipped-side",
         "random-equal-40",
-        "random-equal-40-flipped-side",
-        "46-34",
         "46-34-flipped-side",
         "43-37",
         "43-37-flipped-side",
+        "equal40-40",
+        "random-equal-40-flipped-side",
         "34-46",
-        "34-46-flipped-side",
+        "37-43-flipped-side",
         "37-43",
-        "37-43-flipped-side"
+        "34-46-flipped-side"
     ]
 }

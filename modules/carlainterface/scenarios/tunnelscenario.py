@@ -64,7 +64,7 @@ class TunnelScenario(Scenario):
 
         if agent_1.shared_variables.transform[0:3][1] < -400. and not self.stop_signal_was_sent:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
-            print('Trail is over')
+            print('Trial is over')
             self.stop_signal_was_sent = True
 
 
@@ -93,12 +93,12 @@ class TunnelScenario(Scenario):
         # terminate process agent 2
         if agent_2.shared_variables.transform[0:3][1] > 400. and not self.stop_signal_was_sent:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
-            print('Trail is over')
+            print('Trial is over')
             self.stop_signal_was_sent = True
 
         if agent_2.shared_variables.transform[0:3][1] < -400. and not self.stop_signal_was_sent:
             carla_interface_process.pipe_comm.send({"stop_all_modules": True})
-            print('Trail is over')
+            print('Trial is over')
             self.stop_signal_was_sent = True
 
 
