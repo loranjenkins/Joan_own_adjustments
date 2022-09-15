@@ -106,9 +106,9 @@ class TunnelScenario(Scenario):
         vehicle_1 = shapely.geometry.box(-self.vehicle_width, -self.vehicle_length, self.vehicle_width, self.vehicle_length)
         vehicle_2 = shapely.geometry.box(-self.vehicle_width, -self.vehicle_length, self.vehicle_width, self.vehicle_length)
 
-        if agent_1.shared_variables.transform[0:3][1] <= 250:
+        if agent_1.shared_variables.transform[0:3][1] <= 200:
             vehicle_1 = shapely.affinity.rotate(vehicle_1, self.approach_angle_vehicle1, use_radians=True)
-        if agent_2.shared_variables.transform[0:3][1] <= 250:
+        if agent_2.shared_variables.transform[0:3][1] <= 200:
             vehicle_2 = shapely.affinity.rotate(vehicle_2, self.approach_angle_vehicle2, use_radians=True)
 
         vehicle_1 = shapely.affinity.translate(vehicle_1, agent_1.shared_variables.transform[0:3][0], agent_1.shared_variables.transform[0:3][1])
