@@ -317,17 +317,20 @@
         "trailexploring",
         "trailexploring",
         "trailexploring",
-        "60-40",
+        "trailexploring",
+        "random-equal-50-flipped-side",
         "equal50-50-flipped-side",
+
+        "60-40",
+        "40-60-flipped-side",
         "random-equal-50",
-        "60-40-flipped-side",
-        "55-45",
+        "45-55",
         "55-45-flipped-side",
         "equal50-50",
         "random-equal-50-flipped-side",
         "40-60",
+        "55-45",
         "45-55-flipped-side",
-        "45-55",
-        "40-60-flipped-side"
+        "60-40-flipped-side"
     ]
 }
